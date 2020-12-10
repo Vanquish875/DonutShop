@@ -48,10 +48,10 @@ namespace DonutShop.Controllers
         }
 
         [HttpPatch]
-        [Route("api/Products/delete")]
-        public async Task<ActionResult<int>> Delete(int ID)
+        [Route("api/Products/delete/{id}")]
+        public async Task<ActionResult<int>> Delete(int id)
         {
-            return await _productRepo.DeleteProduct(ID);
+            return await _productRepo.DeleteProduct(id);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace DonutShop.Repositories
 
         public async Task<IEnumerable<ProductType>> GetProductTypes()
         {
-            var sQuery = "SELECT * FROM ProductTypes";
+            var sQuery = "SELECT * FROM ProductType";
 
             return await _db.LoadData<ProductType, dynamic>(sQuery, new { });
         }

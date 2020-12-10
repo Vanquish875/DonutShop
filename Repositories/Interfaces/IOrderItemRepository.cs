@@ -8,5 +8,6 @@ namespace DonutShop.Repositories.Interfaces
     {
         Task<int> CreateOrderItem(OrderItem orderItem);
         Task<IEnumerable<OrderItem>> GetOrderItems(int OrderID);
+        Task<int> DeleteOrderItem(int OrderID);
     }
 }

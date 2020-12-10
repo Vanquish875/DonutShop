@@ -30,11 +30,11 @@ namespace DonutShop.Controllers
             return await _orderItemRepo.GetOrderItems(OrderID);
         }
 
-        //[HttpPatch]
-        //[Route("api/OrderItem/delete")]
-        //public async Task<ActionResult<int>> Delete(int id)
-        //{
-        //    return await _orderItemRepo.DeleteOrderItem(id);
-        //}
+        [HttpPatch]
+        [Route("api/OrderItem/delete/{id}")]
+        public async Task<ActionResult<int>> Delete(int id)
+        {
+            return await _orderItemRepo.DeleteOrderItem(id);
+        }
     }
 }

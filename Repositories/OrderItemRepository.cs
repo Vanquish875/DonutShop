@@ -14,7 +14,7 @@ namespace DonutShop.Repositories
 
         public OrderItemRepository(ISqlDataMapper db) => _db = db;
 
-        public Task<int> CreateOrderItem(OrderItem orderItem)
+        public async Task<int> CreateOrderItem(OrderItem orderItem)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@Product", orderItem.Product.ToString());
@@ -22,7 +22,7 @@ namespace DonutShop.Repositories
             queryParameters.Add("@OrderID", orderItem.OrderID);
             queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
-            return _db.ExecuteStoredProc("AddOrderItems", queryParameters);
+            return await _db.ExecuteStoredProc("AddOrderItems", queryParameters);
         }
 
         public async Task<IEnumerable<OrderItem>> GetOrderItems(int OrderID)
@@ -30,6 +30,13 @@ namespace DonutShop.Repositories
             var sQuery = "SELECT * FROM OrderItems WHERE OrderID = @ID";
 
             return await _db.LoadData<OrderItem, dynamic>(sQuery, new { ID = OrderID });
+        }
+
+        public async Task<int> DeleteOrderItem(int OrderID)
+        {
+            var sQuery = "Delete From OrderItems Where OrderID = @ID";
+
+            return await _db.SaveData(sQuery, new { ID = OrderID });
         }
     }
 }

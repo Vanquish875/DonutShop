@@ -1,5 +1,6 @@
 using DonutShop.Repositories;
 using DonutShop.Repositories.Interfaces;
+using DonutShop.SqlHandler;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace DonutShop
             //services.AddMvc();
             services.AddControllers();
 
+            services.AddTransient<ISqlDataMapper, SqlDataMapper>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IAddressRepository, AddressRepository>();
             services.AddTransient<ICustomerRepository, CustomerRepository>();
