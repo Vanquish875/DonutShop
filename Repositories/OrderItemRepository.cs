@@ -21,18 +21,17 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<OrderItem, dynamic>(sQuery, new { ID = OrderItemID });
         }
 
-        public Task CreateOrderItem(OrderItem orderItem)
+        public Task<int> CreateOrderItem(OrderItem orderItem)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@ProductID", orderItem.ProductID);
             queryParameters.Add("@OrderID", orderItem.OrderID);
-            queryParameters.Add("@Quantity", orderItem.Quantity);
             queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
             return _db.ExecuteStoredProc("AddOrderItems", queryParameters);
         }
 
-        public Task UpdateOrderItem(OrderItem orderItem)
+        public Task<int> UpdateOrderItem(OrderItem orderItem)
         {
             var sQuery = "UPDATE OrderItems SET ProductID = @productID, OrderID = @orderID, Quantity = @quantity" +
                     "WHERE OrderItemID = @ID";

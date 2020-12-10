@@ -29,7 +29,7 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<Customer, dynamic>(sQuery, new { ID = customerID });
         }
 
-        public Task CreateCustomer(Customer customer)
+        public Task<int> CreateCustomer(Customer customer)
         {
             //var addressRepo = new AddressRepository();
             //int AddressID = addressRepo.CreateAddress(address).Result;
@@ -42,7 +42,7 @@ namespace DonutShop.Repositories
             return _db.ExecuteStoredProc("CreateCustomer", queryParameters);
         }
 
-        public Task UpdateCustomer(Customer customer)
+        public Task<int> UpdateCustomer(Customer customer)
         {
             //var addressRepo = new AddressRepository();
             //int AddressID = addressRepo.CreateAddress(address).Result;
@@ -52,7 +52,7 @@ namespace DonutShop.Repositories
             return _db.SaveData(sQuery, customer);
         }
 
-        public Task DeleteCustomer(int customerID)
+        public Task<int> DeleteCustomer(int customerID)
         {
             var sQuery = "UPDATE Customers SET IsActive = 0 WHERE CustomerID = @ID";
 

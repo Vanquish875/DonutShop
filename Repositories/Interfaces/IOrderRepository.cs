@@ -6,7 +6,7 @@ namespace DonutShop.Repositories.Interfaces
     public interface IOrderRepository
     {
         Task<Order> GetOrder(int OrderItemID);
-        Task CreateOrder(Order order);
-        Task UpdateOrder(Order order);
+        Task<int> CreateOrder(Order order);
+        Task<int> UpdateOrder(Order order);
     }
 }

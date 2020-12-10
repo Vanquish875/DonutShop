@@ -8,8 +8,8 @@ namespace DonutShop.Repositories.Interfaces
     {
         Task<IEnumerable<Product>> GetProductByProductType(int ProductTypeID);
         Task<IEnumerable<Product>> GetProducts();
-        Task CreateProduct(Product product);
-        Task UpdateProduct(Product product);
-        Task DeleteProduct(int ProductID);
+        Task<int> CreateProduct(Product product);
+        Task<int> UpdateProduct(Product product);
+        Task<int> DeleteProduct(int ProductID);
     }
 }

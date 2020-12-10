@@ -29,7 +29,7 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<Employee, dynamic>(sQuery, new { ID = employeeID });
         }
 
-        public Task CreateEmployee(Employee employee)
+        public Task<int> CreateEmployee(Employee employee)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@AddressID", employee.AddressID);
@@ -41,7 +41,7 @@ namespace DonutShop.Repositories
             return _db.ExecuteStoredProc("CreateEmployee", queryParameters);
         }
 
-        public Task UpdateEmployee(Employee employee)
+        public Task<int> UpdateEmployee(Employee employee)
         {
             var sQuery = "UPDATE Employees SET AddressID = @addressID, UserID = @userID, FirstName = @first" +
                     "LastName = @last, ModifiedDate = @date, IsActive = 0 WHERE EmployeeID = @ID";
@@ -49,7 +49,7 @@ namespace DonutShop.Repositories
             return _db.SaveData(sQuery, employee);
         }
 
-        public Task DeleteEmployee(int employeeID)
+        public Task<int> DeleteEmployee(int employeeID)
         {
             var sQuery = "UPDATE Employees SET IsActive = 0 WHERE EmployeeID = @ID";
 

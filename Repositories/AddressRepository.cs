@@ -19,7 +19,7 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<Address, dynamic>(sQuery, new { ID = addressID });
         }
 
-        public Task CreateAddress(Address address)
+        public Task<int> CreateAddress(Address address)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@StateCode", address.StateCode);
@@ -35,7 +35,7 @@ namespace DonutShop.Repositories
             return result;
         }
 
-        public Task UpdateAddress(Address address)
+        public Task<int> UpdateAddress(Address address)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@AddressID", address.AddressID);

@@ -28,7 +28,7 @@ namespace DonutShop.Repositories
             return await _db.LoadData<Product, dynamic>(sQuery, new { });
         }
 
-        public Task UpdateProduct(Product product)
+        public Task<int> UpdateProduct(Product product)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@ProductID", product.ProductID);
@@ -42,14 +42,14 @@ namespace DonutShop.Repositories
             return _db.ExecuteStoredProc("UpdateProduct", product);
         }
 
-        public Task DeleteProduct(int productID)
+        public Task<int> DeleteProduct(int productID)
         {
             var sQuery = "UPDATE Products SET IsActive = 0 WHERE ProductID = @ID";
 
             return _db.SaveData(sQuery, new { ID = productID });
         }
 
-        public Task CreateProduct(Product product)
+        public Task<int> CreateProduct(Product product)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@ProductTypeID", product.ProductTypeID);

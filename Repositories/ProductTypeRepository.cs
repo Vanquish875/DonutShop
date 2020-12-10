@@ -19,21 +19,21 @@ namespace DonutShop.Repositories
             return await _db.LoadData<ProductType, dynamic>(sQuery, new { });
         }
 
-        public Task UpdateProductType(ProductType productType)
+        public Task<int> UpdateProductType(ProductType productType)
         {
             var sQuery = "UPDATE ProductType SET ProductTypeName = @name WHERE ProductID = @ID";
 
             return _db.SaveData(sQuery, productType);
         }
 
-        public Task DeleteProductType(int productTypeID)
+        public Task<int> DeleteProductType(int productTypeID)
         {
             var sQuery = "DELETE FROM ProductType WHERE ProductTypeID = @ID";
 
             return _db.SaveData(sQuery, new { ID = productTypeID });
         }
 
-        public Task CreateProductType(ProductType productType)
+        public Task<int> CreateProductType(ProductType productType)
         {
             var sQuery = "INSERT INTO ProductType (ProductTypeName) VALUES @name";
 

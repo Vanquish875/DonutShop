@@ -18,7 +18,7 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<Order, dynamic>(sQuery, new { ID = orderID });
         }
 
-        public Task CreateOrder(Order order)
+        public Task<int> CreateOrder(Order order)
         {
             var sQuery = "INSERT INTO Orders (StoreID, CustomerID, OrderStatusID," +
                     "EmployeeID, OrderDate, TotalPrice) VALUES @store, @customer, @orderStatus," +
@@ -27,7 +27,7 @@ namespace DonutShop.Repositories
             return _db.SaveData(sQuery, order);
         }
 
-        public Task UpdateOrder(Order order)
+        public Task<int> UpdateOrder(Order order)
         {
             var sQuery = "UPDATE Orders SET StoreID = @storeID, CustomerID = @customerID, OrderStatusID = @orderStatus," +
                     "EmployeeID = @employee, OrderDate = @date, TotalPrice = @total WHERE OrderID = @ID";

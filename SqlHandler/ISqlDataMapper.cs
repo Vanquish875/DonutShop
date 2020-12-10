@@ -8,9 +8,9 @@ namespace DonutShop.SqlHandler
     {
         IDbConnection Connection { get; }
 
-        Task ExecuteStoredProc<T>(string sql, T parameters);
+        Task<int> ExecuteStoredProc<T>(string sql, T parameters);
         Task<IList<T>> LoadData<T, U>(string sql, U parameters);
         Task<T> LoadRecord<T, U>(string sql, U parameters);
-        Task SaveData<T>(string sql, T parameters);
+        Task<int> SaveData<T>(string sql, T parameters);
     }
 }

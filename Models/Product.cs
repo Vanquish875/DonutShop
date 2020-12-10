@@ -17,8 +17,6 @@ namespace DonutShop.Models
 
         public string GetFormattedPrice() => Price.ToString("0.00");
 
-        //public ICollection<OrderItem> OrderItems { get; set; }
-
-        //public override string ToString() => JsonSerializer.Serialize<Product>(this);
+        public override string ToString() => JsonSerializer.Serialize<Product>(this);
     }
 }

@@ -6,7 +6,7 @@ namespace DonutShop.Repositories.Interfaces
     public interface IOrderItemRepository
     {
         Task<OrderItem> GetOrderItem(int OrderItemID);
-        Task CreateOrderItem(OrderItem orderItem);
-        Task UpdateOrderItem(OrderItem orderItem);
+        Task<int> CreateOrderItem(OrderItem orderItem);
+        Task<int> UpdateOrderItem(OrderItem orderItem);
     }
 }

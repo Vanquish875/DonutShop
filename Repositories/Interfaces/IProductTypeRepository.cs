@@ -7,8 +7,8 @@ namespace DonutShop.Repositories.Interfaces
     public interface IProductTypeRepository
     {
         Task<IEnumerable<ProductType>> GetProductTypes();
-        Task CreateProductType(ProductType productType);
-        Task UpdateProductType(ProductType productType);
-        Task DeleteProductType(int ProductTypeID);
+        Task<int> CreateProductType(ProductType productType);
+        Task<int> UpdateProductType(ProductType productType);
+        Task<int> DeleteProductType(int ProductTypeID);
     }
 }

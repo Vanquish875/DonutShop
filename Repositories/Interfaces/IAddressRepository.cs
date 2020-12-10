@@ -6,7 +6,7 @@ namespace DonutShop.Repositories.Interfaces
     public interface IAddressRepository
     {
         Task<Address> GetAddress(int addressID);
-        Task CreateAddress(Address address);
-        Task UpdateAddress(Address address);
+        Task<int> CreateAddress(Address address);
+        Task<int> UpdateAddress(Address address);
     }
 }

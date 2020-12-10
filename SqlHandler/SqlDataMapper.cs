@@ -31,11 +31,12 @@ namespace DonutShop.SqlHandler
             }
         }
 
-        public async Task SaveData<T>(string sql, T parameters)
+        public async Task<int> SaveData<T>(string sql, T parameters)
         {
             using (IDbConnection conn = Connection)
             {
-                await conn.ExecuteAsync(sql, parameters);
+                var data = await conn.ExecuteAsync(sql, parameters);
+                return data; 
             }
         }
 
@@ -48,11 +49,12 @@ namespace DonutShop.SqlHandler
             }
         }
 
-        public async Task ExecuteStoredProc<T>(string sql, T parameters)
+        public async Task<int> ExecuteStoredProc<T>(string sql, T parameters)
         {
             using (IDbConnection conn = Connection)
             {
-                await conn.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
+                var data = await conn.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
+                return data;
             }
         }
     }
