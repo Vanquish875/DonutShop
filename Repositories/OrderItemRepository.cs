@@ -2,7 +2,7 @@
 using DonutShop.Models;
 using DonutShop.Repositories.Interfaces;
 using DonutShop.SqlHandler;
-using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 
@@ -14,16 +14,10 @@ namespace DonutShop.Repositories
 
         public OrderItemRepository(ISqlDataMapper db) => _db = db;
 
-        public async Task<OrderItem> GetOrderItem(int OrderItemID)
-        {
-            var sQuery = "SELECT * FROM OrderItem WHERE OrderItemID = @ID";
-
-            return await _db.LoadRecord<OrderItem, dynamic>(sQuery, new { ID = OrderItemID });
-        }
-
         public Task<int> CreateOrderItem(OrderItem orderItem)
         {
             var queryParameters = new DynamicParameters();
+            queryParameters.Add("@Product", orderItem.Product.ToString());
             queryParameters.Add("@ProductID", orderItem.ProductID);
             queryParameters.Add("@OrderID", orderItem.OrderID);
             queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -31,12 +25,11 @@ namespace DonutShop.Repositories
             return _db.ExecuteStoredProc("AddOrderItems", queryParameters);
         }
 
-        public Task<int> UpdateOrderItem(OrderItem orderItem)
+        public async Task<IEnumerable<OrderItem>> GetOrderItems(int OrderID)
         {
-            var sQuery = "UPDATE OrderItems SET ProductID = @productID, OrderID = @orderID, Quantity = @quantity" +
-                    "WHERE OrderItemID = @ID";
+            var sQuery = "SELECT * FROM OrderItems WHERE OrderID = @ID";
 
-            return _db.SaveData(sQuery, orderItem);
+            return await _db.LoadData<OrderItem, dynamic>(sQuery, new { ID = OrderID });
         }
     }
 }

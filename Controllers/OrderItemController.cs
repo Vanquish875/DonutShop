@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DonutShop.Models;
 using DonutShop.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,6 @@ namespace DonutShop.Controllers
             _orderItemRepo = orderItemRepo;
         }
 
-        [HttpGet]
-        [Route("api/OrderItem/{id}")]
-        public async Task<ActionResult<OrderItem>> GetOrderItem(int id)
-        {
-            return await _orderItemRepo.GetOrderItem(id);
-        }
-
         [HttpPut]
         [Route("api/OrderItem/create")]
         public async Task<ActionResult<int>> Create(OrderItem orderItem)
@@ -29,11 +23,11 @@ namespace DonutShop.Controllers
             return await _orderItemRepo.CreateOrderItem(orderItem);
         }
 
-        [HttpPatch]
-        [Route("api/OrderItem/update")]
-        public async Task<ActionResult<int>> Update(OrderItem orderItem)
+        [HttpGet]
+        [Route("api/OrderItems/")]
+        public async Task<IEnumerable<OrderItem>> GetOrderItems(int OrderID)
         {
-            return await _orderItemRepo.UpdateOrderItem(orderItem);
+            return await _orderItemRepo.GetOrderItems(OrderID);
         }
 
         //[HttpPatch]
