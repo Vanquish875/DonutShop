@@ -16,7 +16,14 @@ namespace DonutShop.Controllers
         [HttpGet]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            return await _orderRepo.GetOrder(id);
+            var order = await _orderRepo.GetOrder(id);
+
+            if(order == null)
+            {
+                return NotFound();
+            }
+
+            return order;
         }
 
         [HttpPost]
