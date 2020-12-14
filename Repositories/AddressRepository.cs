@@ -3,6 +3,7 @@ using DonutShop.Models;
 using DonutShop.Repositories.Interfaces;
 using System.Threading.Tasks;
 using DonutShop.SqlHandler;
+using System.Data;
 
 namespace DonutShop.Repositories
 {
@@ -25,11 +26,11 @@ namespace DonutShop.Repositories
             queryParameters.Add("@StateCode", address.StateCode);
             queryParameters.Add("@Address1", address.Address1);
             queryParameters.Add("@Address2", address.Address2);
-            queryParameters.Add("@PhoneNum", address.PhoneNumber);
+            queryParameters.Add("@PhoneNum", address.PhoneNumber.Replace("-", ""));
             queryParameters.Add("@EmailAddress", address.EmailAddress);
             queryParameters.Add("@City", address.City);
             queryParameters.Add("@ZipCode", address.ZipCode);
-            //queryParameters.Add("@AddressID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            queryParameters.Add("@AddressID", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = _db.ExecuteStoredProc("CreateAddress", queryParameters);
             return result;
@@ -42,14 +43,21 @@ namespace DonutShop.Repositories
             queryParameters.Add("@StateCode", address.StateCode);
             queryParameters.Add("@Address1", address.Address1);
             queryParameters.Add("@Address2", address.Address2);
-            queryParameters.Add("@PhoneNum", address.PhoneNumber);
+            queryParameters.Add("@PhoneNum", address.PhoneNumber.Replace("-", ""));
             queryParameters.Add("@EmailAddress", address.EmailAddress);
             queryParameters.Add("@City", address.City);
             queryParameters.Add("@ZipCode", address.ZipCode);
-            //queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
             var result = _db.ExecuteStoredProc("UpdateAddress", queryParameters);
             return result;
+        }
+
+        public Task<int> DeleteAddress(int addressId)
+        {
+            var sQuery = "Delete From Addresss Where AddressID = @ID";
+
+            return _db.SaveData(sQuery, new { ID = addressId });
         }
     }
 }

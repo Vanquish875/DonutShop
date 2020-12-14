@@ -16,30 +16,38 @@ namespace DonutShop.Controllers
         }
 
         [HttpGet]
-        [Route("api/Address/{id}")]
+        [Route("api/address/{id}")]
         public async Task<ActionResult<Address>> GetAddress(int id)
         {
-            return await _addressRepo.GetAddress(id);
+            var address = await _addressRepo.GetAddress(id);
+
+            if(address == null)
+            {
+                return NotFound();
+            }
+
+            return address;
         }
 
-        [HttpPut]
-        [Route("api/Address/create")]
-        public async Task<ActionResult<int>> Create(Address address)
+        [HttpPost]
+        [Route("api/address/create")]
+        public async Task<ActionResult<int>> Create([FromBody] Address address)
         {
             return await _addressRepo.CreateAddress(address);
         }
 
         [HttpPatch]
-        [Route("api/Address/update")]
-        public async Task<ActionResult<int>> Update(Address address)
+        [Route("api/address/update")]
+        public async Task<ActionResult<int>> Update([FromBody] Address address)
         {
             return await _addressRepo.UpdateAddress(address);
         }
 
-        //[HttpDelete]
-        //public async Task<ActionResult<int>> Delete(int id)
-        //{
-        //    return await _addressRepo.DeleteAddress(id);
-        //}
+        [HttpDelete]
+        [Route("api/address/delete/{id:int}")]
+        public async Task<ActionResult<int>> Delete(int id)
+        {
+            return await _addressRepo.DeleteAddress(id);
+        }
     }
 }

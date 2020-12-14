@@ -16,21 +16,28 @@ namespace DonutShop.Controllers
         }
 
         [HttpGet]
-        [Route("api/Employee/{id}")]
+        [Route("api/employee/{id}")]
         public async Task<ActionResult<Employee>> GetEmployee(int id)
         {
-            return await _employeeRepo.GetEmployee(id);
+            var employee = await _employeeRepo.GetEmployee(id);
+
+            if(employee == null)
+            {
+                return NotFound();
+            }
+
+            return employee;
         }
 
         [HttpPut]
-        [Route("api/Employee/create")]
+        [Route("api/employee/create")]
         public async Task<ActionResult<int>> Create(Employee employee)
         {
             return await _employeeRepo.CreateEmployee(employee);
         }
 
         [HttpPatch]
-        [Route("api/Employee/update")]
+        [Route("api/employee/update")]
         public async Task<ActionResult<int>> Update(Employee employee)
         {
             return await _employeeRepo.UpdateEmployee(employee);

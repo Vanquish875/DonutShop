@@ -21,16 +21,28 @@ namespace DonutShop.Controllers
         [Route("api/products/{id}")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductByProductType(int id)
         {
-            var results = await _productRepo.GetProductByProductType(id);
-            return results.ToList();
+            var products = await _productRepo.GetProductByProductType(id);
+
+            if(!products.Any())
+            {
+                return NotFound();
+            }
+
+            return products.ToList();
         }
 
         [HttpGet]
         [Route("api/products")]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var results = await _productRepo.GetProducts();
-            return results.ToList();
+            var products = await _productRepo.GetProducts();
+
+            if(!products.Any())
+            {
+                return NotFound();
+            }
+
+            return products.ToList();
         }
 
         [HttpPut]

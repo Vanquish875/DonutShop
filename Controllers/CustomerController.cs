@@ -16,29 +16,36 @@ namespace DonutShop.Controllers
         }
 
         [HttpGet]
-        [Route("api/Customers/{id}")]
+        [Route("api/customers/{id}")]
         public async Task<ActionResult<Customer>> GetCustomer(int id)
         {
-            return await _customerRepo.GetCustomer(id);
-            //return results;
+            var customer = await _customerRepo.GetCustomer(id);
+
+            if(customer == null)
+            {
+                return NotFound();
+            }
+
+            return customer;
+            
         }
 
         [HttpPut]
-        [Route("api/Customer/create")]
+        [Route("api/customer/create")]
         public async Task<ActionResult<int>> Create(Customer customer)
         {
             return await _customerRepo.CreateCustomer(customer);
         }
 
         [HttpPatch]
-        [Route("api/Customer/update")]
+        [Route("api/customer/update")]
         public async Task<ActionResult<int>> Update(Customer customer)
         {
             return await _customerRepo.UpdateCustomer(customer);
         }
 
         [HttpDelete]
-        [Route("api/Customer/delete")]
+        [Route("api/customer/delete")]
         public async Task<ActionResult<int>> Delete(int id)
         {
             return await _customerRepo.DeleteCustomer(id);

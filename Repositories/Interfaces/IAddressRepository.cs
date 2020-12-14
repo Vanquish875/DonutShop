@@ -8,5 +8,6 @@ namespace DonutShop.Repositories.Interfaces
         Task<Address> GetAddress(int addressID);
         Task<int> CreateAddress(Address address);
         Task<int> UpdateAddress(Address address);
+        Task<int> DeleteAddress(int addressId);
     }
 }

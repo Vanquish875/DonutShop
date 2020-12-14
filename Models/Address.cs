@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DonutShop.Models
 {
@@ -11,18 +10,15 @@ namespace DonutShop.Models
         public string StateCode { get; set; }
         [Required, MaxLength(100)]
         public string Address1 { get; set; }
-        [Required, MaxLength(100)]
-        public string Address2 { get; set; }
-        [Required, MaxLength(15)]
+        [MaxLength(100)]
+        public string? Address2 { get; set; }
+        [Required, MaxLength(13)]
         public string PhoneNumber { get; set; }
-        [Required, MaxLength(100)]
+        [Required, MaxLength(250)]
         public string EmailAddress { get; set; }
         [Required, MaxLength(50)]
         public string City { get; set; }
         [Required, MaxLength(20)]
         public string ZipCode { get; set; }
-
-        //public ICollection<Customer> Customers { get; set; }
-        //public ICollection<Store> Stores { get; set; }
     }
 }
