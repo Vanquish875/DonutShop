@@ -16,24 +16,27 @@ namespace DonutShop.Controllers
         }
 
         [HttpGet]
+        [Route("api/Address/{id}")]
         public async Task<ActionResult<Address>> GetAddress(int id)
         {
             return await _addressRepo.GetAddress(id);
         }
 
         [HttpPut]
+        [Route("api/Address/create")]
         public async Task<ActionResult<int>> Create(Address address)
         {
             return await _addressRepo.CreateAddress(address);
         }
 
         [HttpPatch]
+        [Route("api/Address/update")]
         public async Task<ActionResult<int>> Update(Address address)
         {
             return await _addressRepo.UpdateAddress(address);
         }
 
-        //[HttpPatch]
+        //[HttpDelete]
         //public async Task<ActionResult<int>> Delete(int id)
         //{
         //    return await _addressRepo.DeleteAddress(id);

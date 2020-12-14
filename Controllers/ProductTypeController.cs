@@ -18,6 +18,7 @@ namespace DonutShop.Controllers
         }
 
         [HttpGet]
+        [Route("api/ProductTypes")]
         public async Task<ActionResult<IEnumerable<ProductType>>> GetProductType()
         {
             var result = await _productTypeRepo.GetProductTypes();
@@ -25,18 +26,21 @@ namespace DonutShop.Controllers
         }
 
         [HttpPut]
+        [Route("api/ProductType/create")]
         public async Task<ActionResult<int>> Create(ProductType productType)
         {
             return await _productTypeRepo.CreateProductType(productType);
         }
 
         [HttpPatch]
+        [Route("api/ProductType/update")]
         public async Task<ActionResult<int>> Update(ProductType productType)
         {
             return await _productTypeRepo.UpdateProductType(productType);
         }
 
-        [HttpPatch]
+        [HttpDelete]
+        [Route("api/ProductType/delete")]
         public async Task<ActionResult<int>> Delete(int id)
         {
             return await _productTypeRepo.DeleteProductType(id);

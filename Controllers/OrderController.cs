@@ -14,6 +14,7 @@ namespace DonutShop.Controllers
         public OrderController(IOrderRepository orderRepo) => _orderRepo = orderRepo;
 
         [HttpGet]
+        [Route("api/Order/{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {
             var order = await _orderRepo.GetOrder(id);
@@ -27,6 +28,7 @@ namespace DonutShop.Controllers
         }
 
         [HttpPost]
+        [Route("api/Order/create")]
         public async Task<ActionResult<int>> Create(Order order)
         {
             order.OrderDate = DateTime.Now;
@@ -34,12 +36,14 @@ namespace DonutShop.Controllers
         }
 
         [HttpPatch]
+        [Route("api/Order/update")]
         public async Task<ActionResult<int>> Update(Order order)
         {
             return await _orderRepo.UpdateOrder(order);
         }
 
         [HttpDelete]
+        [Route("api/Order/delete")]
         public async Task<ActionResult<int>> Delete(int id)
         {
             return await _orderRepo.DeleteOrder(id);
