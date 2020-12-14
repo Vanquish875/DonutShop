@@ -20,7 +20,6 @@ namespace DonutShop
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddMvc();
             services.AddControllers();
 
             services.AddTransient<ISqlDataMapper, SqlDataMapper>();
@@ -41,8 +40,6 @@ namespace DonutShop
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
