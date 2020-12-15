@@ -28,6 +28,13 @@ namespace DonutShop.Repositories
             return await _db.LoadData<Product, dynamic>(sQuery, new { });
         }
 
+        public async Task<Product> GetProduct(int ProductID)
+        {
+            var sQuery = "Select * FROM Products WHERE ProductID = @ID";
+
+            return await _db.LoadRecord<Product, dynamic>(sQuery, new { ID = ProductID });
+        }
+
         public Task<int> UpdateProduct(Product product)
         {
             var queryParameters = new DynamicParameters();
@@ -37,9 +44,8 @@ namespace DonutShop.Repositories
             queryParameters.Add("@Description", product.ProductDescription);
             queryParameters.Add("@Price", product.Price);
             queryParameters.Add("@ProductSize", product.ProductSize);
-            //queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
-            return _db.ExecuteStoredProc("UpdateProduct", product);
+            return _db.ExecuteStoredProc("UpdateProduct", queryParameters);
         }
 
         public Task<int> DeleteProduct(int productID)
@@ -57,9 +63,10 @@ namespace DonutShop.Repositories
             queryParameters.Add("@Description", product.ProductDescription);
             queryParameters.Add("@Price", product.Price);
             queryParameters.Add("@ProductSize", product.ProductSize);
-            //queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            queryParameters.Add("@ModifiedDate", product.ModifiedDate);
+            queryParameters.Add("@IsActive", product.IsActive);
 
-            return _db.ExecuteStoredProc("CreateProduct", product);
+            return _db.ExecuteStoredProc("CreateProduct", queryParameters);
         }
     }
 }

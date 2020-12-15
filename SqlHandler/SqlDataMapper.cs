@@ -35,8 +35,7 @@ namespace DonutShop.SqlHandler
         {
             using (IDbConnection conn = Connection)
             {
-                var data = await conn.ExecuteAsync(sql, parameters);
-                return data; 
+                return await conn.ExecuteAsync(sql, parameters); 
             }
         }
 
@@ -53,8 +52,7 @@ namespace DonutShop.SqlHandler
         {
             using (IDbConnection conn = Connection)
             {
-                var data = await conn.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
-                return data;
+                return await conn.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
             }
         }
     }
