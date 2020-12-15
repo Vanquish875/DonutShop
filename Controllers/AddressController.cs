@@ -40,14 +40,28 @@ namespace DonutShop.Controllers
         [Route("api/address/update")]
         public async Task<ActionResult<int>> Update([FromBody] Address address)
         {
-            return await _addressRepo.UpdateAddress(address);
+            var resp = await _addressRepo.UpdateAddress(address);
+
+            if(resp == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
 
         [HttpDelete]
-        [Route("api/address/delete/{id:int}")]
-        public async Task<ActionResult<int>> Delete(int id)
+        [Route("api/address/{id:int}")]
+        public async Task<ActionResult<int>> Delete([FromRoute] int id)
         {
-            return await _addressRepo.DeleteAddress(id);
+            var resp = await _addressRepo.DeleteAddress(id);
+            
+            if(resp == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

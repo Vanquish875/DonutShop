@@ -19,7 +19,7 @@ namespace DonutShop.Controllers
 
         [HttpPut]
         [Route("api/orderitem/create")]
-        public async Task<ActionResult<int>> Create(OrderItem orderItem)
+        public async Task<ActionResult<int>> Create([FromBody] OrderItem orderItem)
         {
             return await _orderItemRepo.CreateOrderItem(orderItem);
         }

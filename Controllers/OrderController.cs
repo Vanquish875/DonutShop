@@ -29,7 +29,7 @@ namespace DonutShop.Controllers
 
         [HttpPost]
         [Route("api/order/create")]
-        public async Task<ActionResult<int>> Create(Order order)
+        public async Task<ActionResult<int>> Create([FromBody] Order order)
         {
             order.OrderDate = DateTime.Now;
             return await _orderRepo.CreateOrder(order);
@@ -37,7 +37,7 @@ namespace DonutShop.Controllers
 
         [HttpPatch]
         [Route("api/order/update")]
-        public async Task<ActionResult<int>> Update(Order order)
+        public async Task<ActionResult<int>> Update([FromBody] Order order)
         {
             return await _orderRepo.UpdateOrder(order);
         }

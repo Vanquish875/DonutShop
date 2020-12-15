@@ -23,7 +23,7 @@ namespace DonutShop.Controllers
         {
             var types = await _productTypeRepo.GetProductTypes();
 
-            if(types == null)
+            if(!types.Any())
             {
                 return NotFound();
             }
@@ -33,14 +33,14 @@ namespace DonutShop.Controllers
 
         [HttpPut]
         [Route("api/producttype/create")]
-        public async Task<ActionResult<int>> Create(ProductType productType)
+        public async Task<ActionResult<int>> Create([FromBody] ProductType productType)
         {
             return await _productTypeRepo.CreateProductType(productType);
         }
 
         [HttpPatch]
         [Route("api/producttype/update")]
-        public async Task<ActionResult<int>> Update(ProductType productType)
+        public async Task<ActionResult<int>> Update([FromBody] ProductType productType)
         {
             return await _productTypeRepo.UpdateProductType(productType);
         }

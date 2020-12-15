@@ -47,14 +47,14 @@ namespace DonutShop.Controllers
 
         [HttpPut]
         [Route("api/products/create")]
-        public async Task<ActionResult<int>> Create(Product product)
+        public async Task<ActionResult<int>> Create([FromBody] Product product)
         {
             return await _productRepo.CreateProduct(product);
         }
 
         [HttpPatch]
         [Route("api/products/update")]
-        public async Task<ActionResult<int>> Update(Product product)
+        public async Task<ActionResult<int>> Update([FromBody] Product product)
         {
             return await _productRepo.UpdateProduct(product);
         }
