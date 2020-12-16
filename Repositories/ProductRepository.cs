@@ -44,6 +44,8 @@ namespace DonutShop.Repositories
             queryParameters.Add("@Description", product.ProductDescription);
             queryParameters.Add("@Price", product.Price);
             queryParameters.Add("@ProductSize", product.ProductSize);
+            queryParameters.Add("@ModifiedDate", product.ModifiedDate);
+            queryParameters.Add("@IsActive", product.IsActive);
 
             return _db.ExecuteStoredProc("UpdateProduct", queryParameters);
         }

@@ -8,6 +8,6 @@ namespace DonutShop.Models
         public int ProductTypeID { get; set; }
         public string ProductTypeName { get; set; }
 
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> ? Products { get; set; }
     }
 }

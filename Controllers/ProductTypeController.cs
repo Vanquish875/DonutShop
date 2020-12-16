@@ -19,7 +19,7 @@ namespace DonutShop.Controllers
 
         [HttpGet]
         [Route("api/producttypes")]
-        public async Task<ActionResult<IEnumerable<ProductType>>> GetProductType()
+        public async Task<ActionResult<IEnumerable<ProductType>>> GetProductTypes()
         {
             var types = await _productTypeRepo.GetProductTypes();
 
@@ -29,6 +29,20 @@ namespace DonutShop.Controllers
             }
 
             return types.ToList();
+        }
+
+        [HttpGet]
+        [Route("api/producttype/{id}")]
+        public async Task<ActionResult<ProductType>> GetProductType(int id)
+        {
+            var prodType = await _productTypeRepo.GetProductType(id);
+
+            if(prodType == null)
+            {
+                return NotFound();
+            }
+
+            return prodType;
         }
 
         [HttpPut]
@@ -46,10 +60,17 @@ namespace DonutShop.Controllers
         }
 
         [HttpDelete]
-        [Route("api/producttype/delete")]
-        public async Task<ActionResult<int>> Delete(int id)
+        [Route("api/producttype/{id:int}")]
+        public async Task<ActionResult<int>> Delete([FromRoute] int id)
         {
-            return await _productTypeRepo.DeleteProductType(id);
+            var res = await _productTypeRepo.DeleteProductType(id);
+
+            if(res == 0)
+            {
+                return NotFound();
+            }
+
+            return res;
         }
     }
 }
