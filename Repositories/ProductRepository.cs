@@ -52,9 +52,7 @@ namespace DonutShop.Repositories
 
         public Task<int> DeleteProduct(int productID)
         {
-            var sQuery = "UPDATE Products SET IsActive = 0 WHERE ProductID = @ID";
-
-            return _db.SaveData(sQuery, new { ID = productID });
+            return _db.ExecuteStoredProc("DeleteProduct", new { ID = productID });
         }
 
         public Task<int> CreateProduct(Product product)

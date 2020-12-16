@@ -12,18 +12,9 @@ namespace DonutShop.Repositories
         private readonly ISqlDataMapper _db;
 
         public CustomerRepository(ISqlDataMapper db) => _db = db;
-        
-        public async Task<int> GetAddressID(int customerID)
-        {
-            var sQuery = "SELECT AddressID FROM Customers WHERE CustomerID = @ID";
-
-            return await _db.LoadRecord<int, dynamic>(sQuery, new { ID = customerID });
-        }
 
         public async Task<Customer> GetCustomer(int customerID)
         {
-            //I should also call AddressRepository to bring back address info.
-            //var AddressID = GetAddressID(customerID);
             var sQuery = "SELECT * FROM Customers WHERE CustomerID = @ID";
 
             return await _db.LoadRecord<Customer, dynamic>(sQuery, new { ID = customerID });
@@ -31,25 +22,29 @@ namespace DonutShop.Repositories
 
         public Task<int> CreateCustomer(Customer customer)
         {
-            //var addressRepo = new AddressRepository();
-            //int AddressID = addressRepo.CreateAddress(address).Result;
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@AddressID", customer.AddressID);
+            queryParameters.Add("@user", customer.UserID);
             queryParameters.Add("@FirstName", customer.FirstName);
             queryParameters.Add("@LastName", customer.LastName);
-            queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+            queryParameters.Add("ModifiedDate", customer.ModifiedDate);
+            queryParameters.Add("@IsActive", customer.IsActive);
 
             return _db.ExecuteStoredProc("CreateCustomer", queryParameters);
         }
 
         public Task<int> UpdateCustomer(Customer customer)
         {
-            //var addressRepo = new AddressRepository();
-            //int AddressID = addressRepo.CreateAddress(address).Result;
-            var sQuery = "UPDATE Customers SET AddressID = @addressID, UserID = @userID, FirstName = @first" +
-                    "LastName = @last, ModifiedDate = @date, IsActive = 0 WHERE CustomerID = @ID";
+            var queryParameters = new DynamicParameters();
+            queryParameters.Add("@CustomerID", customer.CustomerID);
+            queryParameters.Add("@AddressID", customer.AddressID);
+            queryParameters.Add("@user", customer.UserID);
+            queryParameters.Add("@FirstName", customer.FirstName);
+            queryParameters.Add("@LastName", customer.LastName);
+            queryParameters.Add("ModifiedDate", customer.ModifiedDate);
+            queryParameters.Add("@IsActive", customer.IsActive);
 
-            return _db.SaveData(sQuery, customer);
+            return _db.ExecuteStoredProc("UpdateCustomer", queryParameters);
         }
 
         public Task<int> DeleteCustomer(int customerID)
