@@ -30,6 +30,7 @@ namespace DonutShop
             services.AddTransient<IProductTypeRepository, ProductTypeRepository>();
             services.AddTransient<IOrderItemRepository, OrderItemRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IStoreRepository, StoreRepository>();
 
             services.AddAuthentication();
         }

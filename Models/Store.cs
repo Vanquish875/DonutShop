@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DonutShop.Models
+﻿namespace DonutShop.Models
 {
     public class Store
     {
@@ -9,7 +6,5 @@ namespace DonutShop.Models
         public int AddressID { get; set; }
         public string StoreName { get; set; }
         public decimal TaxRate { get; set; }
-
-        public ICollection<Order> Orders { get; set; }
     }
 }

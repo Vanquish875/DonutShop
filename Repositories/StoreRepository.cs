@@ -1,7 +1,6 @@
 ﻿using DonutShop.Models;
 using DonutShop.Repositories.Interfaces;
 using DonutShop.SqlHandler;
-using System;
 using System.Threading.Tasks;
 
 namespace DonutShop.Repositories
@@ -12,24 +11,32 @@ namespace DonutShop.Repositories
 
         public StoreRepository(ISqlDataMapper db) => _db = db;
 
-        public Task<int> CreateStore(Store store)
+        public async Task<int> CreateStore(Store store)
         {
-            throw new NotImplementedException();
+            var sQuery = "INSERT INTO Stores (AddressID, StoreName, TaxRate) VALUES (@AddressID, @StoreName, @TaxRate)";
+
+            return await _db.SaveData(sQuery, new { AddressID = store.AddressID, StoreName = store.StoreName, TaxRate = store.TaxRate });
         }
 
-        public Task<int> DeleteStore(int storeID)
+        public async Task<int> DeleteStore(int storeID)
         {
-            throw new NotImplementedException();
+            var sQuery = "DELETE FROM Stores WHERE StoreID = @ID";
+
+            return await _db.SaveData(sQuery, new { ID = storeID });
         }
 
-        public Task<Store> GetStore(int storeID)
+        public async Task<Store> GetStore(int storeID)
         {
-            throw new NotImplementedException();
+            var sQuery = "Select * From Stores Where StoreID = @ID";
+
+            return await _db.LoadRecord<Store, dynamic>(sQuery, new { ID = storeID });
         }
 
-        public Task<int> UpdateStore(Store store)
+        public async Task<int> UpdateStore(Store store)
         {
-            throw new NotImplementedException();
+            var sQuery = "UPDATE Stores AddressID = @AddressID, StoreName = @StoreName, TaxRate = @TaxRate WHERE StoreID = @StoreID";
+
+            return await _db.SaveData(sQuery, new { AddressID = store.AddressID, StoreName = store.StoreName, TaxRate = store.TaxRate, StoreID = store.StoreID });
         }
     }
 }

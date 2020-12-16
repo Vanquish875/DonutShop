@@ -29,23 +29,23 @@ namespace DonutShop.Controllers
             return store;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("api/store/create")]
-        public async Task<ActionResult<int>> Create(Store store)
+        public async Task<ActionResult<int>> CreateStore([FromBody] Store store)
         {
             return await _storeRepo.CreateStore(store);
         }
 
         [HttpPatch]
         [Route("api/store/update")]
-        public async Task<ActionResult<int>> Update(Store store)
+        public async Task<ActionResult<int>> UpdateStore([FromBody] Store store)
         {
             return await _storeRepo.UpdateStore(store);
         }
 
-        [HttpPatch]
-        [Route("api/store/delete")]
-        public async Task<ActionResult<int>> Delete(int id)
+        [HttpDelete]
+        [Route("api/store/{id:int}")]
+        public async Task<ActionResult<int>> DeleteStore([FromRoute] int id)
         {
             return await _storeRepo.DeleteStore(id);
         }
