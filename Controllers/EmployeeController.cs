@@ -29,16 +29,16 @@ namespace DonutShop.Controllers
             return employee;
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("api/employee/create")]
-        public async Task<ActionResult<int>> Create(Employee employee)
+        public async Task<ActionResult<int>> Create([FromBody] Employee employee)
         {
             return await _employeeRepo.CreateEmployee(employee);
         }
 
         [HttpPatch]
         [Route("api/employee/update")]
-        public async Task<ActionResult<int>> Update(Employee employee)
+        public async Task<ActionResult<int>> Update([FromBody] Employee employee)
         {
             return await _employeeRepo.UpdateEmployee(employee);
         }

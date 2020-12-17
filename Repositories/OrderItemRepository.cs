@@ -20,7 +20,6 @@ namespace DonutShop.Repositories
             queryParameters.Add("@Product", orderItem.Product.ToString());
             queryParameters.Add("@ProductID", orderItem.ProductID);
             queryParameters.Add("@OrderID", orderItem.OrderID);
-            queryParameters.Add("@ReturnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
             return await _db.ExecuteStoredProc("AddOrderItems", queryParameters);
         }

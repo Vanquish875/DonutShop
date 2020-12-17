@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DonutShop.Models;
 using DonutShop.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +9,13 @@ namespace DonutShop.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderRepository _orderRepo;
+        private readonly IOrderItemRepository _orderItemRepo;
 
-        public OrderController(IOrderRepository orderRepo) => _orderRepo = orderRepo;
+        public OrderController(IOrderRepository orderRepo, IOrderItemRepository orderItemRepo)
+        {
+            _orderRepo = orderRepo;
+            _orderItemRepo = orderItemRepo;
+        } 
 
         [HttpGet]
         [Route("api/order/{id}")]
@@ -31,8 +35,15 @@ namespace DonutShop.Controllers
         [Route("api/order/create")]
         public async Task<ActionResult<int>> Create([FromBody] Order order)
         {
-            order.OrderDate = DateTime.Now;
-            return await _orderRepo.CreateOrder(order);
+            var orderid = await _orderRepo.CreateOrder(order);
+
+            foreach (var item in order.OrderItems)
+            {
+                item.OrderID = orderid;
+                await _orderItemRepo.CreateOrderItem(item);
+            }
+
+            return orderid;
         }
 
         [HttpPatch]

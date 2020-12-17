@@ -2,6 +2,7 @@
 using DonutShop.Models;
 using DonutShop.Repositories.Interfaces;
 using DonutShop.SqlHandler;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace DonutShop.Repositories
@@ -19,7 +20,23 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<Order, dynamic>(sQuery, new { ID = orderID });
         }
 
-        public Task<int> CreateOrder(Order order)
+        public async Task<int> CreateOrder(Order order)
+        {
+            var queryParameters = new DynamicParameters();
+            queryParameters.Add("@StoreID", order.StoreID);
+            queryParameters.Add("@CustomerID", order.CustomerID);
+            queryParameters.Add("@OrderStatus", order.OrderStatusID);
+            queryParameters.Add("@EmployeeID", order.EmployeeID);
+            queryParameters.Add("@OrderDate", order.OrderDate);
+            queryParameters.Add("@Cost", order.GetTotalPrice());
+            queryParameters.Add("@OrderID", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
+
+            await _db.ExecuteStoredProc("CreateOrder", queryParameters);
+
+            return queryParameters.Get<int>("@OrderID");
+        }
+
+        public async Task<int> UpdateOrder(Order order)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@OrderID", order.OrderID);
@@ -27,24 +44,17 @@ namespace DonutShop.Repositories
             queryParameters.Add("@CustomerID", order.CustomerID);
             queryParameters.Add("@OrderStatus", order.OrderStatusID);
             queryParameters.Add("@EmployeeID", order.EmployeeID);
+            queryParameters.Add("@OrderDate", order.OrderDate);
             queryParameters.Add("@Cost", order.GetTotalPrice());
 
-            return _db.ExecuteStoredProc("CreateOrder", order);
+            return await _db.ExecuteStoredProc("UpdateOrder", queryParameters);
         }
 
-        public Task<int> UpdateOrder(Order order)
-        {
-            var sQuery = "UPDATE Orders SET StoreID = @storeID, CustomerID = @customerID, OrderStatusID = @orderStatus," +
-                    "EmployeeID = @employee, OrderDate = @date, TotalPrice = @total WHERE OrderID = @ID";
-
-            return _db.SaveData(sQuery, order);
-        }
-
-        public Task<int> DeleteOrder(int orderID)
+        public async Task<int> DeleteOrder(int orderID)
         {
             var sQuery = "Delete From Order Where OrderID = @ID";
 
-            return _db.SaveData(sQuery, new { ID = orderID });
+            return await _db.SaveData(sQuery, new { ID = orderID });
         }
     }
 }
