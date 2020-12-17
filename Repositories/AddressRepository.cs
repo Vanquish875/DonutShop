@@ -20,7 +20,7 @@ namespace DonutShop.Repositories
             return await _db.LoadRecord<Address, dynamic>(sQuery, new { ID = addressID });
         }
 
-        public Task<int> CreateAddress(Address address)
+        public async Task<int> CreateAddress(Address address)
         {
             var queryParameters = new DynamicParameters();
             queryParameters.Add("@StateCode", address.StateCode);
@@ -30,10 +30,11 @@ namespace DonutShop.Repositories
             queryParameters.Add("@EmailAddress", address.EmailAddress);
             queryParameters.Add("@City", address.City);
             queryParameters.Add("@ZipCode", address.ZipCode);
-            queryParameters.Add("@AddressID", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            queryParameters.Add("@AddressID", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
 
-            var result = _db.ExecuteStoredProc("CreateAddress", queryParameters);
-            return result;
+            await _db.ExecuteStoredProc("CreateAddress", queryParameters);
+
+            return queryParameters.Get<int>("@AddressID");
         }
 
         public Task<int> UpdateAddress(Address address)

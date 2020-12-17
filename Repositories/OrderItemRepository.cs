@@ -17,7 +17,6 @@ namespace DonutShop.Repositories
         public async Task<int> CreateOrderItem(OrderItem orderItem)
         {
             var queryParameters = new DynamicParameters();
-            queryParameters.Add("@Product", orderItem.Product.ToString());
             queryParameters.Add("@ProductID", orderItem.ProductID);
             queryParameters.Add("@OrderID", orderItem.OrderID);
 

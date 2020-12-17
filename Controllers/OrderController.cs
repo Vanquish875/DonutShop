@@ -39,8 +39,9 @@ namespace DonutShop.Controllers
 
             foreach (var item in order.OrderItems)
             {
-                item.OrderID = orderid;
-                await _orderItemRepo.CreateOrderItem(item);
+                OrderItem orderItems = new OrderItem(item.Product.ProductID, orderid);
+
+                await _orderItemRepo.CreateOrderItem(orderItems);
             }
 
             return orderid;

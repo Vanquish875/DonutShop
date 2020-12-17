@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace DonutShop.Models
+﻿namespace DonutShop.Models
 {
     public class OrderItem
     {
+        public OrderItem(int productid, int orderid)
+        {
+            ProductID = productid;
+            OrderID = orderid;
+        }
+
         public int OrderItemID { get; set; }
-        public Product Product { get; set; }
         public int ProductID { get; set; }
-        public int ? OrderID { get; set; }
+        public int OrderID { get; set; }
     }
 }

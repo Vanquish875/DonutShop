@@ -15,7 +15,7 @@ namespace DonutShop.Models
         //public Address ? DeliveryAddress { get; set; } = new Address();
         public decimal TotalPrice { get; set; } = 0;
 
-        public List<OrderItem> OrderItems { get; set; }
+        public List<OrderItemClient> OrderItems { get; set; }
 
         public decimal GetTotalPrice() => OrderItems.Sum(o => o.Product.Price);
 
