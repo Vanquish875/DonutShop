@@ -24,36 +24,28 @@ namespace DonutShop.SqlHandler
 
         public async Task<IList<T>> LoadData<T, U>(string sql, U parameters)
         {
-            using (IDbConnection conn = Connection)
-            {
-                var data = await conn.QueryAsync<T>(sql, parameters);
-                return data.ToList();
-            }
+            using IDbConnection conn = Connection;
+            var data = await conn.QueryAsync<T>(sql, parameters);
+            return data.ToList();
         }
 
         public async Task<int> SaveData<T>(string sql, T parameters)
         {
-            using (IDbConnection conn = Connection)
-            {
-                return await conn.ExecuteAsync(sql, parameters); 
-            }
+            using IDbConnection conn = Connection;
+            return await conn.ExecuteAsync(sql, parameters);
         }
 
         public async Task<T> LoadRecord<T, U>(string sql, U parameters)
         {
-            using (IDbConnection conn = Connection)
-            {
-                var data = await conn.QueryAsync<T>(sql, parameters);
-                return data.FirstOrDefault();
-            }
+            using IDbConnection conn = Connection;
+            var data = await conn.QueryAsync<T>(sql, parameters);
+            return data.FirstOrDefault();
         }
 
         public async Task<int> ExecuteStoredProc<T>(string sql, T parameters)
         {
-            using (IDbConnection conn = Connection)
-            {
-                return await conn.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
-            }
+            using IDbConnection conn = Connection;
+            return await conn.ExecuteAsync(sql, parameters, commandType: CommandType.StoredProcedure);
         }
     }
 }
