@@ -26,7 +26,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return address;
+            return Ok(address);
         }
 
         [HttpPost]

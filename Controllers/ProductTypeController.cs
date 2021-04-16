@@ -28,7 +28,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return types.ToList();
+            return Ok(types.ToList());
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return prodType;
+            return Ok(prodType);
         }
 
         [HttpPut]
@@ -70,7 +70,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return res;
+            return Ok(res);
         }
     }
 }

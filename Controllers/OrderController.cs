@@ -28,7 +28,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return order;
+            return Ok(order);
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace DonutShop.Controllers
                 await _orderItemRepo.CreateOrderItem(orderItems);
             }
 
-            return orderid;
+            return Ok(orderid);
         }
 
         [HttpPatch]

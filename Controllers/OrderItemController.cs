@@ -35,7 +35,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return orderItems.ToList();
+            return Ok(orderItems.ToList());
         }
 
         [HttpPatch]

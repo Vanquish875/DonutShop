@@ -26,7 +26,7 @@ namespace DonutShop.Controllers
                 return NotFound();
             }
 
-            return customer;
+            return Ok(customer);
             
         }
 
